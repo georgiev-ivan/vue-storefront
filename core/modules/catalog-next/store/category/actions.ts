@@ -134,9 +134,11 @@ const actions: ActionTree<CategoryState, RootState> = {
     const loadedCategories: Category[] = []
     if (searchingByIds && !categorySearchOptions.reloadAll) { // removing from search query already loaded categories, they are added to returned results
       for (const [categoryId, category] of Object.entries(getters.getCategoriesMap)) {
-        if (searchedIds.includes(categoryId)) {
-          loadedCategories.push(category as Category)
-        }
+        searchedIds.forEach(element => {
+          if (parseInt(categoryId) === parseInt(element)) {
+            loadedCategories.push(category as Category)
+          }
+        });
       }
       categorySearchOptions.filters.id = searchedIds.filter(categoryId => !getters.getCategoriesMap[categoryId] && !getters.getNotFoundCategoryIds.includes(categoryId))
     }
